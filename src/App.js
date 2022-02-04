@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React, { useState, useEffect } from "react";
+import Board from "./components/Board";
 function App() {
+  const [stage, setState] = useState(1);
+  const [timer, setTimer] = useState(15);
+  const [score, setScore] = useState(0);
+  const time = () => {
+    setTimeout(() => {
+      setTimer((time) => time - 1);
+    }, 1000);
+  };
+  useEffect(() => {
+    if (timer === 0) {
+      clearTimeout();
+      window.confirm(`GAME OVER!\n스테이지: ${stage}, 점수: ${score}`);
+    } else {
+      time();
+    }
+  }, [timer]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <>
+      <header>
+        <>
+          스테이지: {stage}, 남은시간: {timer}, 점수: {score}
+        </>
       </header>
-    </div>
+      <Board stage={stage}></Board>
+    </>
   );
 }
 
