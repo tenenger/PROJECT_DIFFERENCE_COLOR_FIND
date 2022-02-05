@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-function Board({ stage }) {
+function Board({ stage, setStage, timer, setTimer, setScore }) {
   const [red, setRed] = useState(0);
   const [blue, setBlue] = useState(0);
   const [green, setGreen] = useState(0);
@@ -23,7 +23,6 @@ function Board({ stage }) {
     backgroundColor: `rgba(${red}, ${blue}, ${green}, ${opacity})`,
   };
   useEffect(() => {
-    const arr = [...Array(count)];
     setRandomNumber(parseInt(Math.random() * count));
   }, [count]);
 
@@ -35,11 +34,22 @@ function Board({ stage }) {
     setCount(Math.pow(Math.round((stage + 0.5) / 2) + 1, 2));
   }, [stage]);
 
+  const diffOnClick = () => {
+    setScore((prev) => prev + Math.pow(stage, 3) * timer);
+    console.log(Math.pow(stage, 3), timer);
+    setTimer(15);
+    setStage((prev) => prev + 1);
+  };
+
+  const sameOnClick = () => {
+    setTimer((prev) => prev - 3);
+  };
+
   const boxList = arr.map((num, index) => {
     if (index === randomNumber) {
-      return <div key={index} style={diffStyle}></div>;
+      return <div key={index} style={diffStyle} onClick={diffOnClick}></div>;
     } else {
-      return <div key={index} style={style}></div>;
+      return <div key={index} style={style} onClick={sameOnClick}></div>;
     }
   });
 
