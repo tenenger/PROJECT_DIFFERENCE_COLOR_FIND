@@ -12,6 +12,7 @@ function App() {
         console.log("Set Interval");
         setTimer((second) => second - 1);
       } else {
+        setTimer(0);
         console.log("Clear Interval");
         clearInterval(intervalID.current);
         intervalID.current = null;
@@ -22,9 +23,6 @@ function App() {
     return () => clearInterval(intervalID.current);
   }, [timer]);
 
-  const onClick = () => {
-    setTimer(15);
-  };
   return (
     <>
       <header>
@@ -39,7 +37,6 @@ function App() {
         setTimer={setTimer}
         setScore={setScore}
       ></Board>
-      <button onClick={onClick}>시간초기화</button>
     </>
   );
 }

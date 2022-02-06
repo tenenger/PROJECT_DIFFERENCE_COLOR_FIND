@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Board_style from "./Board.module.css";
 
 function Board({ stage, setStage, timer, setTimer, setScore }) {
   const [red, setRed] = useState(0);
@@ -8,22 +9,27 @@ function Board({ stage, setStage, timer, setTimer, setScore }) {
   const [count, setCount] = useState(stage);
   const arr = [...Array(count)];
   const [randomNumber, setRandomNumber] = useState(0);
+  const [row, setRow] = useState(1);
+  const [boxsize, setBoxsize] = useState(176);
   const style = {
-    // 사각형으로 스테이지가 올라가면 크기와 색상을 변경해야한다.
-    width: "176px",
-    height: "176px",
+    width: `${boxsize}px`,
+    height: `${boxsize}px`,
     margin: "2px",
     backgroundColor: `rgb(${red}, ${blue}, ${green})`,
   };
   const diffStyle = {
-    // 사각형으로 스테이지가 올라가면 크기와 색상을 변경해야한다.
-    width: "176px",
-    height: "176px",
+    width: `${boxsize}px`,
+    height: `${boxsize}px`,
     margin: "2px",
     backgroundColor: `rgba(${red}, ${blue}, ${green}, ${opacity})`,
   };
+  const BoardCalculate = () => {
+    setBoxsize(`${360 / row - 4}`);
+  };
   useEffect(() => {
-    setRandomNumber(parseInt(Math.random() * count));
+    setRow((prev) => prev + 1);
+    BoardCalculate();
+    console.log(count);
   }, [count]);
 
   useEffect(() => {
@@ -32,6 +38,7 @@ function Board({ stage, setStage, timer, setTimer, setScore }) {
     setGreen(parseInt(Math.random() * 255));
     setOpacity((prev) => prev + 0.02);
     setCount(Math.pow(Math.round((stage + 0.5) / 2) + 1, 2));
+    setRandomNumber(parseInt(Math.random() * count));
   }, [stage]);
 
   const diffOnClick = () => {
@@ -53,7 +60,7 @@ function Board({ stage, setStage, timer, setTimer, setScore }) {
     }
   });
 
-  return <div>{boxList}</div>;
+  return <div className={Board_style.layout}>{boxList}</div>;
 }
 
 export default Board;
