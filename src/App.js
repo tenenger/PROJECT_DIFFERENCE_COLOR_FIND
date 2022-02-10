@@ -129,7 +129,7 @@ function App() {
       }
     }, 1000);
     return () => clearInterval(intervalID.current);
-  }, [timer]);
+  }, [timer, stage, score]);
 
   return (
     <div className="outer">
