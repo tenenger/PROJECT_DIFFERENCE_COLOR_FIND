@@ -1,5 +1,5 @@
 # 목표
-다른 색깔 찾기 게임 프로젝트를 진행하여, React 역량 
+다른 색깔 찾기 게임 프로젝트를 진행하여, React 역량 향상
 
 # 사용한 기술
 Front-end: HTML, CSS, JSX, React<br>
