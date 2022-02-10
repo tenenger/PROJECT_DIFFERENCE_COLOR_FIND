@@ -4,7 +4,7 @@
 # 사용한 기술
 Front-end: HTML, CSS, JSX, React<br>
 
-Deployment: .
+Deployment: Netlify
 
 # 도메인
-.
+https://diff-color-catch.netlify.app/
