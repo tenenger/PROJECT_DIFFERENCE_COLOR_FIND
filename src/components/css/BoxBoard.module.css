@@ -21,3 +21,19 @@ html {
 .donTouch {
   pointer-events: none;
 }
+.outer {
+  width: 500px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+.content {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 0 20px;
+}
