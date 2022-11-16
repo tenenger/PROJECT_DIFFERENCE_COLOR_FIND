@@ -1,4 +1,3 @@
-import React from "react";
 import Board_style from "../css/BoxBoard.module.css";
 import BoxStyle from "./BoxStyle";
 import Setting from "./Setting";
