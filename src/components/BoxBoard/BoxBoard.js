@@ -3,44 +3,48 @@ import BoxStyle from "./BoxStyle";
 import Setting from "./Setting";
 
 function BoxBoard() {
-  // setting값과 boxstyle값을 가져온다.
-  const { stage, setStage, timer, setTimer, setScore, playing, score } =
-    Setting();
-  const { style, diffStyle, boxCount, randomBox } = BoxStyle(stage, playing);
+  const { setting, setSetting } = Setting(15);
+  const {
+    commonStyle,
+    diffStyle,
+    boxStyle: { boxAmount, diffBoxIdx },
+  } = BoxStyle(setting.stage, setting.isPlay);
 
   const onDiffBoxClick = () => {
-    // 다른 색상의 박스를 클릭한경우에 점수, 타이머, 스테이지를 변화시킨다.
-    setScore((prev) => prev + Math.pow(stage, 3) * timer);
-    setTimer(15);
-    setStage((prev) => prev + 1);
+    setSetting((prev) => ({
+      ...prev,
+      score: prev.score + Math.pow(prev.stage, 3) * prev.time,
+      time: 15,
+      stage: prev.stage + 1,
+    }));
   };
 
   const onSameBoxClick = () => {
-    // 같은 색상의 박스를 클릭한 경우에 시간을 감소시킨다.
-    // 만약 시간이 3초 미만이면 0초로 바꾸고, 아니라면 3초를 빼준다.
-    timer < 3 ? setTimer(0) : setTimer((prev) => prev - 3);
+    setting.time < 3
+      ? setSetting((prev) => ({ ...prev, time: 0 }))
+      : setSetting((prev) => ({ ...prev, time: setting.time - 3 }));
   };
 
   return (
     <div className={Board_style.outer}>
       <div className={Board_style.content}>
-        <div>스테이지: {stage}</div>
-        <div>남은시간: {timer}</div>
-        <div>점수: {score}</div>
+        <div>스테이지: {setting.stage}</div>
+        <div>남은시간: {setting.time}</div>
+        <div>점수: {setting.score}</div>
       </div>
       <div className={Board_style.layout}>
         {/* 숫자만큼 태그를 반복하여 호출한다.(숫자를 배열로 변환) */}
-        {[...Array(boxCount)].map((element, index) => {
-          if (index === randomBox) {
-            return (
-              <div key={index} style={diffStyle} onClick={onDiffBoxClick}></div>
-            );
-          } else {
-            return (
-              <div key={index} style={style} onClick={onSameBoxClick}></div>
-            );
-          }
-        })}
+        {[...Array(boxAmount)].map((_, index) =>
+          index === diffBoxIdx ? (
+            <div
+              key={index}
+              style={{ ...commonStyle, ...diffStyle }}
+              onClick={onDiffBoxClick}
+            ></div>
+          ) : (
+            <div key={index} style={commonStyle} onClick={onSameBoxClick}></div>
+          )
+        )}
       </div>
     </div>
   );
