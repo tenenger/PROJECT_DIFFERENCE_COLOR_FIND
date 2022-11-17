@@ -3,12 +3,15 @@ import BoxStyle from "./BoxStyle";
 import Setting from "./Setting";
 
 function BoxBoard() {
-  const { setting, setSetting } = Setting(15);
+  const { stage,
+    time,
+    score,
+    isPlay, setSetting } = Setting(15);
   const {
     commonStyle,
     diffStyle,
     boxStyle: { boxAmount, diffBoxIdx },
-  } = BoxStyle(setting.stage, setting.isPlay);
+  } = BoxStyle(stage, isPlay);
 
   const onDiffBoxClick = () => {
     setSetting((prev) => ({
@@ -20,17 +23,17 @@ function BoxBoard() {
   };
 
   const onSameBoxClick = () => {
-    setting.time < 3
+    time < 3
       ? setSetting((prev) => ({ ...prev, time: 0 }))
-      : setSetting((prev) => ({ ...prev, time: setting.time - 3 }));
+      : setSetting((prev) => ({ ...prev, time: time - 3 }));
   };
 
   return (
     <div className={Board_style.outer}>
       <div className={Board_style.content}>
-        <div>스테이지: {setting.stage}</div>
-        <div>남은시간: {setting.time}</div>
-        <div>점수: {setting.score}</div>
+        <div>스테이지: {stage}</div>
+        <div>남은시간: {time}</div>
+        <div>점수: {score}</div>
       </div>
       <div className={Board_style.layout}>
         {/* 숫자만큼 태그를 반복하여 호출한다.(숫자를 배열로 변환) */}

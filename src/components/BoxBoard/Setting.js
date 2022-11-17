@@ -55,6 +55,6 @@ const Setting = (time) => {
     return () => clearInterval(intervalID.current);
   }, [gameover, setting.time, timer]);
 
-  return { setting, setSetting };
+  return { ...setting, setSetting };
 };
 export default Setting;
