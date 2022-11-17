@@ -1,36 +1,30 @@
-import { SLayout, SInfomation, SBoxBoard } from "./BoxBoard.style";
+import { SLayout, SInfomation, SBoxBoard, SBox } from "./BoxBoard.style";
 import useSetting from "../../hooks/useSetting";
 
 function BoxBoard({limitTime, intervalTime}) {
-  const {
-    stage,
-    score,
-    remainTime,
-    commonStyle,
-    diffStyle,
-    boxAmount,
-    diffBoxIdx,
-    onDiffBoxClick,
-    onSameBoxClick,
-  } = useSetting(limitTime, intervalTime);
+  const { setting, boxSetting, onDiffBoxClick, onSameBoxClick } =
+    useSetting(limitTime, intervalTime);
 
   return (
     <SLayout>
       <SInfomation>
-        <div>스테이지: {stage}</div>
-        <div>남은시간: {remainTime}</div>
-        <div>점수: {score}</div>
+        <div>스테이지: {setting.stage}</div>
+        <div>남은시간: {setting.remainTime}</div>
+        <div>점수: {setting.score}</div>
       </SInfomation>
       <SBoxBoard>
-        {Array(boxAmount)
+        {Array(boxSetting.boxAmount)
           .fill()
-          .map((_, boxIdx) =>
-            boxIdx === diffBoxIdx ? (
-              <div key={boxIdx} style={{ ...commonStyle, ...diffStyle }} onClick={onDiffBoxClick}></div>
-            ) : (
-              <div key={boxIdx} style={commonStyle} onClick={onSameBoxClick}></div>
-            )
-          )}
+          .map((_, boxIdx) => (
+            <SBox
+              key={boxIdx}
+              onClick={boxIdx === boxSetting.diffBoxIdx
+                ? onDiffBoxClick
+                : onSameBoxClick}
+              boxIdx={boxIdx}
+              {...boxSetting}
+            />
+          ))}
       </SBoxBoard>
     </SLayout>
   );

@@ -28,3 +28,15 @@ export const SBoxBoard = styled.div`
   -moz-box-direction: normal;
   justify-content: space-around;
 `;
+
+export const SBox = styled.div`
+  width: ${(props) => props.boxSize}px;
+  height: ${(props) => props.boxSize}px;
+  margin: 2px;
+  background-color: rgb(
+    ${(props) => props.red},
+    ${(props) => props.blue},
+    ${(props) => props.green}
+  );
+  opacity: ${(props) => props.boxIdx === props.diffBoxIdx && props.opacity};
+`;

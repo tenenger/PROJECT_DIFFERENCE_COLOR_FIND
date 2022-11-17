@@ -54,7 +54,7 @@ const useSetting = (limitTime, intervalTime) => {
     return () => clearTimeout(timeoutID.current);
   }, [intervalTime, setting.remainTime, gameover, timer]);
 
-  return { ...setting, ...boxSetting, onDiffBoxClick, onSameBoxClick };
+  return { setting, boxSetting, onDiffBoxClick, onSameBoxClick };
 };
 
 export default useSetting;

@@ -41,20 +41,8 @@ const useBoxSetting = (stage) => {
     boxContentInit();
   }, [boxColorInit, boxContentInit]);
 
-  // change plan: inline style -> emotion
-  const commonStyle = {
-    width: `${boxContent.boxSize}px`,
-    height: `${boxContent.boxSize}px`,
-    margin: "2px",
-    backgroundColor: `rgb(${boxColor.red}, ${boxColor.blue}, ${boxColor.green})`,
-  };
-  const diffStyle = {
-    opacity: `${boxColor.opacity}`,
-  };
-
   return {
-    commonStyle,
-    diffStyle,
+    ...boxColor,
     ...boxContent,
   };
 };
