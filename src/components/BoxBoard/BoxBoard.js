@@ -1,11 +1,10 @@
 import styles from "./BoxBoard.module.css";
-import BoxStyle from "./BoxStyle";
+import useBoxStyle from "../../hooks/useBoxStyle";
 import useSetting from "../../hooks/useSetting";
 
 function BoxBoard() {
   const { stage, remainTime, score, setSetting } = useSetting(15, 1);
-  const { commonStyle, diffStyle, boxAmount, diffBoxIdx } =
-    BoxStyle(stage);
+  const { commonStyle, diffStyle, boxAmount, diffBoxIdx } = useBoxStyle(stage);
 
   const onDiffBoxClick = () => {
     setSetting((prev) => ({
