@@ -6,6 +6,7 @@ const Setting = (limitTime, intervalTime) => {
     score: 0,
     remainTime: limitTime
   });
+  
   const timeoutID = useRef(null);
 
   const gameover = useCallback(() => {
@@ -27,6 +28,21 @@ const Setting = (limitTime, intervalTime) => {
     }));
   }, [intervalTime]);
 
+  const onDiffBoxClick = () => {
+    setSetting((prev) => ({
+      ...prev,
+      score: prev.score + Math.pow(prev.stage, 3) * prev.remainTime,
+      remainTime: limitTime,
+      stage: prev.stage + 1,
+    }));
+  };
+
+  const onSameBoxClick = () => {
+    setting.remainTime < 3
+      ? setSetting((prev) => ({ ...prev, remainTime: 0 }))
+      : setSetting((prev) => ({ ...prev, remainTime: prev.remainTime - 3 }));
+  };
+
   useEffect(() => {
     timeoutID.current = setTimeout(() => {
       if (setting.remainTime === 0) gameover();
@@ -36,7 +52,7 @@ const Setting = (limitTime, intervalTime) => {
     return () => clearTimeout(timeoutID.current);
   }, [intervalTime, setting.remainTime, gameover, timer]);
 
-  return { ...setting, setSetting };
+  return { ...setting, onDiffBoxClick, onSameBoxClick };
 };
 
 export default Setting;

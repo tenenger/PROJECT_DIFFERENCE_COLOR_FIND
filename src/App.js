@@ -4,7 +4,7 @@ import BoxBoard from "./components/BoxBoard/BoxBoard";
 function App() {
   return (
     <>
-      <BoxBoard />
+      <BoxBoard limitTime="15" intervalTime="1" />
     </>
   );
 }
