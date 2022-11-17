@@ -3,10 +3,10 @@ import { useEffect, useRef, useState, useCallback } from "react";
 const Setting = (limitTime, intervalTime) => {
   const [setting, setSetting] = useState({
     stage: 1,
-    remainTime: limitTime,
     score: 0,
+    remainTime: limitTime
   });
-  const intervalID = useRef(null);
+  const timeoutID = useRef(null);
 
   const gameover = useCallback(() => {
     // change plan: alert -> modal
@@ -15,8 +15,8 @@ const Setting = (limitTime, intervalTime) => {
     setSetting((prev) => ({
       ...prev,
       stage: 1,
-      remainTime: limitTime,
       score: 0,
+      remainTime: limitTime,
     }));
   }, [setting.stage, setting.score, limitTime]);
 
@@ -28,12 +28,12 @@ const Setting = (limitTime, intervalTime) => {
   }, [intervalTime]);
 
   useEffect(() => {
-    intervalID.current = setTimeout(() => {
-      if (setting.remainTime === 0) gameover(intervalID);
+    timeoutID.current = setTimeout(() => {
+      if (setting.remainTime === 0) gameover();
       else timer();
     }, intervalTime * 1000);
 
-    return () => clearTimeout(intervalID.current);
+    return () => clearTimeout(timeoutID.current);
   }, [intervalTime, setting.remainTime, gameover, timer]);
 
   return { ...setting, setSetting };
