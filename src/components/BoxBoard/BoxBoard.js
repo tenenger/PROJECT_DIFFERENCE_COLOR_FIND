@@ -3,9 +3,9 @@ import BoxStyle from "./BoxStyle";
 import useSetting from "../../hooks/useSetting";
 
 function BoxBoard() {
-  const { stage, remainTime, score, isPlay, setSetting } = useSetting(15, 1);
+  const { stage, remainTime, score, setSetting } = useSetting(15, 1);
   const { commonStyle, diffStyle, boxStyle: { boxAmount, diffBoxIdx } } =
-    BoxStyle(stage, isPlay);
+    BoxStyle(stage);
 
   const onDiffBoxClick = () => {
     setSetting((prev) => ({

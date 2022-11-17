@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-const BoxStyle = (stage, isPlay) => {
+const BoxStyle = (stage) => {
   const [boxStyle, setBoxStyle] = useState({
     red: 0,
     blue: 0,
