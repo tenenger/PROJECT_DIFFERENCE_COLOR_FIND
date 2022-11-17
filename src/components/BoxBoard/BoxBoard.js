@@ -2,7 +2,7 @@ import styles from "./BoxBoard.module.css";
 import useBoxStyle from "../../hooks/useBoxStyle";
 import useSetting from "../../hooks/useSetting";
 
-function BoxBoard(limitTime, intervalTime) {
+function BoxBoard({limitTime, intervalTime}) {
   const { stage, remainTime, score, onDiffBoxClick, onSameBoxClick } =
     useSetting(limitTime, intervalTime);
   const { commonStyle, diffStyle, boxAmount, diffBoxIdx } = useBoxStyle(stage);
