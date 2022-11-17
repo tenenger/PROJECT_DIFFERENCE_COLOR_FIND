@@ -9,7 +9,6 @@ const useSetting = (limitTime, intervalTime) => {
     remainTime: limitTime,
   });
   const boxSetting = useBoxSetting(setting.stage);
-
   const timeoutID = useRef(null);
 
   const reset = useCallback(() => {
@@ -22,15 +21,17 @@ const useSetting = (limitTime, intervalTime) => {
   }, [limitTime]);
 
   const timer = useCallback(() => {
-    clearTimeout(timeoutID.current);
+    if (timeoutID.current) clearTimeout(timeoutID.current);
 
     timeoutID.current = setTimeout(() => {
+      if (setting.remainTime === 0) return setPlay(false);
+
       setSetting((prev) => ({
         ...prev,
         remainTime: prev.remainTime - intervalTime,
       }));
     }, intervalTime * 1000);
-  }, [intervalTime]);
+  }, [setting.remainTime, intervalTime]);
 
   const onDiffBoxClick = () => {
     setSetting((prev) => ({
@@ -50,12 +51,11 @@ const useSetting = (limitTime, intervalTime) => {
   };
 
   useEffect(() => {
-    if (isPlay && setting.remainTime === 0) setPlay(false);
-    else if (isPlay && setting.remainTime !== 0) timer();
-    else if (!isPlay) reset();
+    if (!isPlay) reset();
 
+    timer();
     return () => clearTimeout(timeoutID.current);
-  }, [isPlay, setting.remainTime, reset, timer]);
+  }, [isPlay, reset, timer]);
 
   return {
     isPlay,
