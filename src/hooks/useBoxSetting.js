@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 
-const useBoxSetting = (stage) => {
+const useBoxSetting = (stage, isPlay) => {
   const [boxColor, setBoxColor] = useState({
     red: 0,
     blue: 0,
     green: 0,
     opacity: 0.4,
   });
-  
+
   const [boxContent, setBoxContent] = useState({
     boxAmount: 4,
     boxSize: 176,
@@ -37,9 +37,11 @@ const useBoxSetting = (stage) => {
   }, [stage]);
 
   useEffect(() => {
-    boxColorInit();
-    boxContentInit();
-  }, [boxColorInit, boxContentInit]);
+    if (stage === 1 || isPlay) {
+      boxColorInit();
+      boxContentInit();
+    }
+  }, [stage, boxColorInit, boxContentInit, isPlay]);
 
   return {
     ...boxColor,

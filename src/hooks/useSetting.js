@@ -8,7 +8,7 @@ const useSetting = (limitTime, intervalTime) => {
     score: 0,
     remainTime: limitTime,
   });
-  const boxSetting = useBoxSetting(setting.stage);
+  const boxSetting = useBoxSetting(setting.stage, isPlay);
   const timeoutID = useRef(null);
 
   const reset = useCallback(() => {
