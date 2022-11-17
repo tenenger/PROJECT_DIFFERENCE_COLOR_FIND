@@ -1,9 +1,9 @@
 import styles from "./BoxBoard.module.css";
 import BoxStyle from "./BoxStyle";
-import Setting from "./Setting";
+import useSetting from "../../hooks/useSetting";
 
 function BoxBoard() {
-  const { stage, remainTime, score, isPlay, setSetting } = Setting(15, 1);
+  const { stage, remainTime, score, isPlay, setSetting } = useSetting(15, 1);
   const { commonStyle, diffStyle, boxStyle: { boxAmount, diffBoxIdx } } =
     BoxStyle(stage, isPlay);
 
