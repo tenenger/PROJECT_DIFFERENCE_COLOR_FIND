@@ -1,4 +1,4 @@
-import styles from "./BoxBoard.module.css";
+import { SLayout, SInfomation, SBoxBoard } from "./BoxBoard.style";
 import useSetting from "../../hooks/useSetting";
 
 function BoxBoard({limitTime, intervalTime}) {
@@ -15,30 +15,24 @@ function BoxBoard({limitTime, intervalTime}) {
   } = useSetting(limitTime, intervalTime);
 
   return (
-    <div className={styles.outer}>
-      <div className={styles.content}>
+    <SLayout>
+      <SInfomation>
         <div>스테이지: {stage}</div>
         <div>남은시간: {remainTime}</div>
         <div>점수: {score}</div>
-      </div>
-      <div className={styles.layout}>
-        {Array(boxAmount).fill().map((_, boxIdx) =>
-          boxIdx === diffBoxIdx ? (
-            <div
-              key={boxIdx}
-              style={{ ...commonStyle, ...diffStyle }}
-              onClick={onDiffBoxClick}>
-            </div>
-          ) : (
-            <div
-              key={boxIdx}
-              style={commonStyle}
-              onClick={onSameBoxClick}>
-            </div>
-          )
-        )}
-      </div>
-    </div>
+      </SInfomation>
+      <SBoxBoard>
+        {Array(boxAmount)
+          .fill()
+          .map((_, boxIdx) =>
+            boxIdx === diffBoxIdx ? (
+              <div key={boxIdx} style={{ ...commonStyle, ...diffStyle }} onClick={onDiffBoxClick}></div>
+            ) : (
+              <div key={boxIdx} style={commonStyle} onClick={onSameBoxClick}></div>
+            )
+          )}
+      </SBoxBoard>
+    </SLayout>
   );
 }
 export default BoxBoard;

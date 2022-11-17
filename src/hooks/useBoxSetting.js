@@ -41,7 +41,7 @@ const useBoxSetting = (stage) => {
     boxContentInit();
   }, [boxColorInit, boxContentInit]);
 
-  // change plan: css module -> emotion
+  // change plan: inline style -> emotion
   const commonStyle = {
     width: `${boxContent.boxSize}px`,
     height: `${boxContent.boxSize}px`,
