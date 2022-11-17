@@ -1,60 +1,42 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
-const Setting = (time) => {
+const Setting = (limitTime, intervalTime) => {
   const [setting, setSetting] = useState({
     stage: 1,
-    time: time,
+    remainTime: limitTime,
     score: 0,
-    isPlay: true,
   });
   const intervalID = useRef(null);
 
-  const gameover = useCallback(
-    (intervalID) => {
-      clearInterval(intervalID.current);
+  const gameover = useCallback(() => {
+    // change plan: alert -> modal
+    alert(`GAME OVER!\n스테이지: ${setting.stage}, 점수: ${setting.score}`);
 
-      setSetting((prev) => ({
-        ...prev,
-        isPlay: false,
-      }));
-
-      alert(`GAME OVER!\n스테이지: ${setting.stage}, 점수: ${setting.score}`);
-    },
-    [setting.stage, setting.score]
-  );
-
-  const reset = () => {
     setSetting((prev) => ({
       ...prev,
       stage: 1,
-      time: 15,
+      remainTime: limitTime,
       score: 0,
-      isPlay: true,
     }));
-  };
+  }, [setting.stage, setting.score, limitTime]);
 
-  const timer = useCallback((time) => {
+  const timer = useCallback(() => {
     setSetting((prev) => ({
       ...prev,
-      time: prev.time - time,
+      remainTime: prev.remainTime - intervalTime,
     }));
-  }, []);
+  }, [intervalTime]);
 
   useEffect(() => {
-    // 1초씩 감소하는 타이머(조금 늦게 끝남)
-    // React에서 setInterval를 사용하기 위해서는 useRef.current에 저장해야 사용가능하다.
-    intervalID.current = setInterval(() => {
-      if (setting.time === 0) {
-        gameover(intervalID);
-        reset();
-        return;
-      }
-      timer(1);
-    }, 1000);
+    intervalID.current = setTimeout(() => {
+      if (setting.remainTime === 0) gameover(intervalID);
+      else timer();
+    }, intervalTime * 1000);
 
-    return () => clearInterval(intervalID.current);
-  }, [gameover, setting.time, timer]);
+    return () => clearTimeout(intervalID.current);
+  }, [intervalTime, setting.remainTime, gameover, timer]);
 
   return { ...setting, setSetting };
 };
+
 export default Setting;
