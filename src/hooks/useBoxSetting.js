@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 
-const BoxStyle = (stage) => {
+const useBoxSetting = (stage) => {
   const [boxColor, setBoxColor] = useState({
     red: 0,
     blue: 0,
     green: 0,
     opacity: 0.4,
   });
+  
   const [boxContent, setBoxContent] = useState({
     boxAmount: 4,
     boxSize: 176,
@@ -57,4 +58,4 @@ const BoxStyle = (stage) => {
     ...boxContent,
   };
 };
-export default BoxStyle;
+export default useBoxSetting;

@@ -1,11 +1,18 @@
 import styles from "./BoxBoard.module.css";
-import useBoxStyle from "../../hooks/useBoxStyle";
 import useSetting from "../../hooks/useSetting";
 
 function BoxBoard({limitTime, intervalTime}) {
-  const { stage, remainTime, score, onDiffBoxClick, onSameBoxClick } =
-    useSetting(limitTime, intervalTime);
-  const { commonStyle, diffStyle, boxAmount, diffBoxIdx } = useBoxStyle(stage);
+  const {
+    stage,
+    score,
+    remainTime,
+    commonStyle,
+    diffStyle,
+    boxAmount,
+    diffBoxIdx,
+    onDiffBoxClick,
+    onSameBoxClick,
+  } = useSetting(limitTime, intervalTime);
 
   return (
     <div className={styles.outer}>
@@ -15,11 +22,11 @@ function BoxBoard({limitTime, intervalTime}) {
         <div>점수: {score}</div>
       </div>
       <div className={styles.layout}>
-        {[...Array(boxAmount)].map((_, index) =>
-          index === diffBoxIdx ? (
-            <div key={index} style={{ ...commonStyle, ...diffStyle }} onClick={onDiffBoxClick}></div>
+        {[...Array(boxAmount)].map((_, boxIdx) =>
+          boxIdx === diffBoxIdx ? (
+            <div key={boxIdx} style={{ ...commonStyle, ...diffStyle }} onClick={onDiffBoxClick}></div>
           ) : (
-            <div key={index} style={commonStyle} onClick={onSameBoxClick}></div>
+            <div key={boxIdx} style={commonStyle} onClick={onSameBoxClick}></div>
           )
         )}
       </div>

@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState, useCallback } from "react";
+import useBoxSetting from "./useBoxSetting";
 
-const Setting = (limitTime, intervalTime) => {
+const useSetting = (limitTime, intervalTime) => {
   const [setting, setSetting] = useState({
     stage: 1,
     score: 0,
     remainTime: limitTime
   });
+  const boxSetting = useBoxSetting(setting.stage);
   
   const timeoutID = useRef(null);
 
@@ -52,7 +54,7 @@ const Setting = (limitTime, intervalTime) => {
     return () => clearTimeout(timeoutID.current);
   }, [intervalTime, setting.remainTime, gameover, timer]);
 
-  return { ...setting, onDiffBoxClick, onSameBoxClick };
+  return { ...setting, ...boxSetting, onDiffBoxClick, onSameBoxClick };
 };
 
-export default Setting;
+export default useSetting;
