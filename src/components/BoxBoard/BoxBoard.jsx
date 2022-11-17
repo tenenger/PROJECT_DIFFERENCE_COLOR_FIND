@@ -1,9 +1,17 @@
 import { SLayout, SInfomation, SBoxBoard, SBox } from "./BoxBoard.style";
 import useSetting from "../../hooks/useSetting";
+import Modal from "../modal/Modal";
+import ModalContent from "./ModalContent";
 
 function BoxBoard({limitTime, intervalTime}) {
-  const { setting, boxSetting, onDiffBoxClick, onSameBoxClick } =
-    useSetting(limitTime, intervalTime);
+  const {
+    isPlay,
+    setPlay,
+    setting,
+    boxSetting,
+    onDiffBoxClick,
+    onSameBoxClick
+  } = useSetting(limitTime, intervalTime);
 
   return (
     <SLayout>
@@ -18,15 +26,25 @@ function BoxBoard({limitTime, intervalTime}) {
           .map((_, boxIdx) => (
             <SBox
               key={boxIdx}
-              onClick={boxIdx === boxSetting.diffBoxIdx
-                ? onDiffBoxClick
-                : onSameBoxClick}
+              onClick={
+                boxIdx === boxSetting.diffBoxIdx
+                ? onDiffBoxClick 
+                : onSameBoxClick
+              }
               boxIdx={boxIdx}
               {...boxSetting}
             />
           ))}
       </SBoxBoard>
+      {!isPlay && <Modal content={
+        <ModalContent
+          setPlay={setPlay}
+          {...setting}
+        />}
+      />}
     </SLayout>
   );
 }
 export default BoxBoard;
+
+

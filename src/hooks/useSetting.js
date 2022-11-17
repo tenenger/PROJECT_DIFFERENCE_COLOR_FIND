@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import useBoxSetting from "./useBoxSetting";
 
 const useSetting = (limitTime, intervalTime) => {
+  const [isPlay, setPlay] = useState(false);
   const [setting, setSetting] = useState({
     stage: 1,
     score: 0,
@@ -11,23 +12,24 @@ const useSetting = (limitTime, intervalTime) => {
   
   const timeoutID = useRef(null);
 
-  const gameover = useCallback(() => {
-    // change plan: alert -> modal
-    alert(`GAME OVER!\n스테이지: ${setting.stage}, 점수: ${setting.score}`);
-
+  const reset = useCallback(() => {
     setSetting((prev) => ({
       ...prev,
       stage: 1,
       score: 0,
       remainTime: limitTime,
     }));
-  }, [setting.stage, setting.score, limitTime]);
+  }, [limitTime]);
 
   const timer = useCallback(() => {
-    setSetting((prev) => ({
-      ...prev,
-      remainTime: prev.remainTime - intervalTime,
-    }));
+    if (timeoutID.current) timeoutID.current = null;
+
+    timeoutID.current = setTimeout(() => {
+        setSetting((prev) => ({
+          ...prev,
+          remainTime: prev.remainTime - intervalTime,
+        }))
+    }, intervalTime * 1000);
   }, [intervalTime]);
 
   const onDiffBoxClick = () => {
@@ -46,15 +48,21 @@ const useSetting = (limitTime, intervalTime) => {
   };
 
   useEffect(() => {
-    timeoutID.current = setTimeout(() => {
-      if (setting.remainTime === 0) gameover();
-      else timer();
-    }, intervalTime * 1000);
+    if (isPlay && setting.remainTime === 0) setPlay(false)
+    else if (isPlay && setting.remainTime !== 0) timer();
+    else if (!isPlay) reset();
 
     return () => clearTimeout(timeoutID.current);
-  }, [intervalTime, setting.remainTime, gameover, timer]);
+  }, [isPlay, setting.remainTime, reset, timer]);
 
-  return { setting, boxSetting, onDiffBoxClick, onSameBoxClick };
+  return {
+    isPlay,
+    setPlay,
+    setting, 
+    boxSetting, 
+    onDiffBoxClick, 
+    onSameBoxClick 
+  };
 };
 
 export default useSetting;
