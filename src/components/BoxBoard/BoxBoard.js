@@ -22,11 +22,19 @@ function BoxBoard({limitTime, intervalTime}) {
         <div>점수: {score}</div>
       </div>
       <div className={styles.layout}>
-        {[...Array(boxAmount)].map((_, boxIdx) =>
+        {Array(boxAmount).fill().map((_, boxIdx) =>
           boxIdx === diffBoxIdx ? (
-            <div key={boxIdx} style={{ ...commonStyle, ...diffStyle }} onClick={onDiffBoxClick}></div>
+            <div
+              key={boxIdx}
+              style={{ ...commonStyle, ...diffStyle }}
+              onClick={onDiffBoxClick}>
+            </div>
           ) : (
-            <div key={boxIdx} style={commonStyle} onClick={onSameBoxClick}></div>
+            <div
+              key={boxIdx}
+              style={commonStyle}
+              onClick={onSameBoxClick}>
+            </div>
           )
         )}
       </div>
