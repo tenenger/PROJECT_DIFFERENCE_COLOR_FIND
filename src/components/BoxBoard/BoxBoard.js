@@ -4,7 +4,7 @@ import useSetting from "../../hooks/useSetting";
 
 function BoxBoard() {
   const { stage, remainTime, score, setSetting } = useSetting(15, 1);
-  const { commonStyle, diffStyle, boxStyle: { boxAmount, diffBoxIdx } } =
+  const { commonStyle, diffStyle, boxAmount, diffBoxIdx } =
     BoxStyle(stage);
 
   const onDiffBoxClick = () => {

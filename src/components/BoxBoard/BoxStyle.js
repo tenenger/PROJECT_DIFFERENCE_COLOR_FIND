@@ -1,33 +1,33 @@
 import { useCallback, useEffect, useState } from "react";
 
 const BoxStyle = (stage) => {
-  const [boxStyle, setBoxStyle] = useState({
+  const [boxColor, setBoxColor] = useState({
     red: 0,
     blue: 0,
     green: 0,
     opacity: 0.4,
+  });
+  const [boxContent, setBoxContent] = useState({
     boxAmount: 4,
     boxSize: 176,
     diffBoxIdx: 0,
   });
 
-  // 랜덤 박스 색상 생성
-  const randomColor = useCallback((opacity) => {
-    setBoxStyle((prev) => ({
+  const boxColorInit = useCallback(() => {
+    setBoxColor((prev) => ({
       ...prev,
       red: parseInt(Math.random() * 255),
       blue: parseInt(Math.random() * 255),
       green: parseInt(Math.random() * 255),
-      opacity: opacity ? opacity : prev.opacity !== 1 ? prev.opacity + 0.02 : 1,
+      opacity: prev.opacity !== 1 ? prev.opacity + 0.02 : stage !== 1 ? 1 : 0.4,
     }));
-  }, []);
+  }, [stage]);
 
-  // 스테이지별 박스 총 개수
-  const boxInit = useCallback(() => {
+  const boxContentInit = useCallback(() => {
     const row = Math.round((stage + 0.5) / 2) + 1;
     const square = row ** 2;
 
-    setBoxStyle((prev) => ({
+    setBoxContent((prev) => ({
       ...prev,
       boxAmount: square,
       diffBoxIdx: Math.floor(Math.random() * square),
@@ -36,24 +36,25 @@ const BoxStyle = (stage) => {
   }, [stage]);
 
   useEffect(() => {
-    randomColor(boxStyle.opacity);
-    boxInit();
-  }, [boxStyle.opacity, randomColor, boxInit]);
+    boxColorInit();
+    boxContentInit();
+  }, [boxColorInit, boxContentInit]);
 
+  // change plan: css module -> emotion
   const commonStyle = {
-    width: `${boxStyle.boxSize}px`,
-    height: `${boxStyle.boxSize}px`,
+    width: `${boxContent.boxSize}px`,
+    height: `${boxContent.boxSize}px`,
     margin: "2px",
-    backgroundColor: `rgb(${boxStyle.red}, ${boxStyle.blue}, ${boxStyle.green})`,
+    backgroundColor: `rgb(${boxColor.red}, ${boxColor.blue}, ${boxColor.green})`,
   };
   const diffStyle = {
-    opacity: `${boxStyle.opacity}`,
+    opacity: `${boxColor.opacity}`,
   };
 
   return {
     commonStyle,
     diffStyle,
-    boxStyle,
+    ...boxContent,
   };
 };
 export default BoxStyle;
