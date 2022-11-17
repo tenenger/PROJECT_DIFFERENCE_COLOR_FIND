@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import useBoxSetting from "./useBoxSetting";
 
-const useSetting = (limitTime, intervalTime) => {
+const useSetting: useSettingHook = (limitTime, intervalTime) => {
   const [isPlay, setPlay] = useState(false);
-  const [setting, setSetting] = useState({
+  const [setting, setSetting] = useState<settingState>({
     stage: 1,
     score: 0,
     remainTime: limitTime,

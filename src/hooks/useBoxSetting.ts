@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-const useBoxSetting = (stage, isPlay) => {
+const useBoxSetting: useBoxSettingHook = (stage, isPlay) => {
   const [boxColor, setBoxColor] = useState({
     red: 0,
     blue: 0,
@@ -17,9 +17,9 @@ const useBoxSetting = (stage, isPlay) => {
   const boxColorInit = useCallback(() => {
     setBoxColor((prev) => ({
       ...prev,
-      red: parseInt(Math.random() * 255),
-      blue: parseInt(Math.random() * 255),
-      green: parseInt(Math.random() * 255),
+      red: Math.floor(Math.random() * 255),
+      blue: Math.floor(Math.random() * 255),
+      green: Math.floor(Math.random() * 255),
       opacity: prev.opacity !== 1 ? prev.opacity + 0.02 : stage !== 1 ? 1 : 0.4,
     }));
   }, [stage]);

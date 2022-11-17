@@ -30,7 +30,7 @@ export const SBoxBoard = styled.div`
   justify-content: space-around;
 `;
 
-export const SBox = styled.div`
+export const SBox = styled.div<BoxBoardStyle>`
   width: ${(props) => props.boxSize}px;
   height: ${(props) => props.boxSize}px;
   margin: 2px;
