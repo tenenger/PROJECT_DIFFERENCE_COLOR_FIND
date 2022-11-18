@@ -51,8 +51,8 @@ yarn start
 | -------- | ----------------  |
 | feat     | 새로운 기능 추가  |
 | refactor | 리팩토링          |
-| fix      | 버그 수정         |
-| Design   | CSS 스타일링      |
+| debug    | 버그 수정         |
+| design   | CSS 스타일링      |
 | docs     | 문서 수정         |
 | remove   | 파일 삭제         |
 | chore    | 패키지 매니저 수정 |
