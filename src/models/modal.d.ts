@@ -1,3 +1,3 @@
 interface ModalComponent {
-  content: React.ReactElement;
+  children: React.ReactElement;
 }

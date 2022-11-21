@@ -37,7 +37,9 @@ function BoxBoard({ limitTime, intervalTime }: BoxBoardComponent) {
           ))}
       </SBoxBoard>
       {!isPlay && (
-        <Modal content={<ModalContent setPlay={setPlay} {...setting} />} />
+        <Modal>
+          <ModalContent setPlay={setPlay} {...setting} />
+        </Modal>
       )}
     </SLayout>
   );

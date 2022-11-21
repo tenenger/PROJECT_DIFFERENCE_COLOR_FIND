@@ -1,7 +1,7 @@
 import { SLayout } from "./Modal.style";
 
-const Modal = ({ content }: ModalComponent) => {
-  return <SLayout>{content}</SLayout>;
+const Modal = ({ children }: ModalComponent) => {
+  return <SLayout>{children}</SLayout>;
 };
 
 export default Modal;
