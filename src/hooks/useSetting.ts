@@ -3,7 +3,7 @@ import useBoxSetting from "./useBoxSetting";
 
 const useSetting: useSettingHook = (limitTime, intervalTime) => {
   const [isPlay, setPlay] = useState(false);
-  const [setting, setSetting] = useState<settingState>({
+  const [setting, setSetting] = useState({
     stage: 1,
     score: 0,
     remainTime: limitTime,
